@@ -1,0 +1,64 @@
+[package]
+name = "temp"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+bincode = { version = "=2.0.0-rc.3", features = ["derive", "serde"] }
+bincode_derive = { version = "=2.0.0-rc.3" }
+boa_engine = { version = "=0.19.0", features = ["fuzz"] }
+
+[dependencies.jstz_kernel]
+git = "https://github.com/jstz-dev/jstz"
+rev = "5c40c6e08e7f03975c1f8a528dc4d087000ead4a"
+
+[dependencies.jstz_crypto]
+git = "https://github.com/jstz-dev/jstz"
+rev = "5c40c6e08e7f03975c1f8a528dc4d087000ead4a"
+
+[dependencies.tezos-smart-rollup-core]
+git = "https://github.com/jstz-dev/tezos"
+rev = "0e21f47f1be4564f95c61a6cf32d02a03e87180c"
+
+[dependencies.tezos-smart-rollup]
+git = "https://github.com/jstz-dev/tezos"
+rev = "0e21f47f1be4564f95c61a6cf32d02a03e87180c"
+default-features = false
+features = [
+  "std",
+  "crypto",
+  "panic-hook",
+  "data-encoding",
+  "storage",
+  "proto-alpha",
+  "utils",
+]
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[[bin]]
+name = "kernel-executable"
+path = "src/lib.rs"
+required-features = ["riscv"]
+
+[features]
+riscv = ["jstz_kernel/riscv_kernel"]
+
+[patch.crates-io]
+tezos-smart-rollup = { git = "https://github.com/jstz-dev/tezos", rev = "0e21f47f1be4564f95c61a6cf32d02a03e87180c" }
+tezos-smart-rollup-host = { git = "https://github.com/jstz-dev/tezos", rev = "0e21f47f1be4564f95c61a6cf32d02a03e87180c" }
+tezos-smart-rollup-core = { git = "https://github.com/jstz-dev/tezos", rev = "0e21f47f1be4564f95c61a6cf32d02a03e87180c" }
+tezos-smart-rollup-mock = { git = "https://github.com/jstz-dev/tezos", rev = "0e21f47f1be4564f95c61a6cf32d02a03e87180c" }
+tezos-smart-rollup-encoding = { git = "https://github.com/jstz-dev/tezos", rev = "0e21f47f1be4564f95c61a6cf32d02a03e87180c" }
+tezos-smart-rollup-entrypoint = { git = "https://github.com/jstz-dev/tezos", rev = "0e21f47f1be4564f95c61a6cf32d02a03e87180c" }
+tezos-smart-rollup-debug = { git = "https://github.com/jstz-dev/tezos", rev = "0e21f47f1be4564f95c61a6cf32d02a03e87180c" }
+tezos-smart-rollup-panic-hook = { git = "https://github.com/jstz-dev/tezos", rev = "0e21f47f1be4564f95c61a6cf32d02a03e87180c" }
+tezos-smart-rollup-storage = { git = "https://github.com/jstz-dev/tezos", rev = "0e21f47f1be4564f95c61a6cf32d02a03e87180c" }
+boa_ast = { git = "https://github.com/trilitech/boa.git", branch = "ajob410@fix/remove-wasm-bindgen-from-time" }
+boa_engine = { git = "https://github.com/trilitech/boa.git", branch = "ajob410@fix/remove-wasm-bindgen-from-time" }
+boa_gc = { git = "https://github.com/trilitech/boa.git", branch = "ajob410@fix/remove-wasm-bindgen-from-time" }
+boa_interner = { git = "https://github.com/trilitech/boa.git", branch = "ajob410@fix/remove-wasm-bindgen-from-time" }
+boa_macros = { git = "https://github.com/trilitech/boa.git", branch = "ajob410@fix/remove-wasm-bindgen-from-time" }
+boa_parser = { git = "https://github.com/trilitech/boa.git", branch = "ajob410@fix/remove-wasm-bindgen-from-time" }
+boa_profiler = { git = "https://github.com/trilitech/boa.git", branch = "ajob410@fix/remove-wasm-bindgen-from-time" }
